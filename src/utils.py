@@ -1,11 +1,11 @@
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-
-from config import FILE_LIST_PATH, DATA_ROOT, PICKS_DIR, FIBER_CHANNELS
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+
+from config import FILE_LIST_PATH, DATA_ROOT, PICKS_DIR, FIBER_CHANNELS
 
 PICK_FILENAME_PATTERN = re.compile(
     r"^(?P<timestamp>\d+(?:\.\d+)?)\.csv$"
@@ -97,7 +97,31 @@ def file_time_from_name(path: Path, local_tz: str = "Asia/Jerusalem") -> datetim
     )
 
 
-def build_file_list(skip_existing: bool = True, last_pick_file: Path | None = None) -> int:
+def utc_day_from_name(path: Path) -> str:
+    """Return the UTC calendar day label (YYYYMMDD) from a timestamp filename."""
+    try:
+        unix_timestamp = float(path.stem)
+    except ValueError:
+        print(f"Failed to convert filename {path.name} to timestamp")
+        unix_timestamp = 0
+
+    return datetime.fromtimestamp(
+        unix_timestamp,
+        tz=timezone.utc,
+    ).strftime("%Y%m%d")
+
+
+def build_file_list(
+    skip_existing: bool = True,
+    last_pick_file: Path | None = None,
+    one_day: bool = False,
+) -> tuple[int, str | None]:
+    """Build the EQNet input file list.
+
+    When ``one_day`` is True, only include files from the earliest unprocessed
+    UTC calendar day (matching ``DATA_ROOT/YYYYMMDD/`` layout). Returns
+    ``(num_files, day_label)`` where ``day_label`` is ``YYYYMMDD`` or None.
+    """
     last_pick_time = file_time_from_name(last_pick_file) if last_pick_file else None
     files = []
 
@@ -110,6 +134,11 @@ def build_file_list(skip_existing: bool = True, last_pick_file: Path | None = No
         key=lambda path: float(path.stem)
     )
 
+    day_label = None
+    if one_day and files:
+        day_label = utc_day_from_name(files[0])
+        files = [path for path in files if utc_day_from_name(path) == day_label]
+
     with FILE_LIST_PATH.open(
         "w",
         encoding="utf-8",
@@ -118,5 +147,5 @@ def build_file_list(skip_existing: bool = True, last_pick_file: Path | None = No
         for path in files:
             file.write(path.as_posix() + "\n")
 
-    return len(files)
+    return len(files), day_label
 
