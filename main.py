@@ -1,8 +1,8 @@
 from config import FILE_LIST_PATH
-from notify import send_detection
-from plot_event import plot_event
-from run_EQNet import run_EQNet
-from utils import (
+from src.notify import send_detection
+from src.plot_event import plot_event
+from src.run_EQNet import run_EQNet
+from src.utils import (
     build_file_list,
     delete_old_empty_pick_files,
     get_last_pick_file,
