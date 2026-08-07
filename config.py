@@ -2,6 +2,10 @@ from pathlib import Path
 import os
 import sys
 
+# DATA SETTINGS
+FIBER_CHANNELS = 6000
+FIBER_NAME = "fiber_0"
+
 # Python path
 PYTHON_PATH = Path(sys.executable)
 

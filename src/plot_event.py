@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 from scipy.signal import butter, sosfiltfilt
 
-from config import DATA_ROOT, OUTPUT_DIR
+from config import DATA_ROOT, OUTPUT_DIR, FIBER_NAME
 
 
 @dataclass
@@ -188,6 +188,7 @@ def plot_event(
         )
 
     ax.set_title(
+        f"{FIBER_NAME} | "
         f"{local_start:%Y-%m-%d %H:%M:%S.%f} "
         f"{local_start.tzname()} | "
         f"{len(visible_picks):,} picks"
