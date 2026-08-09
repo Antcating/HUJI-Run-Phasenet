@@ -3,7 +3,7 @@ name = "deadsea-phasenet"
 version = "0.1.0"
 description = "Scheduled automatic phase detector on Dead Sea system"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "fsspec>=2026.7.0",
     "h5py>=3.16.0",
