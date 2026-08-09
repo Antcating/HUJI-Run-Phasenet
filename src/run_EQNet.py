@@ -48,7 +48,6 @@ def run_EQNet(file_list: Path, **kwargs) -> None:
         "--cut_patch",
         "--sampling_rate",
         str(sampling_rate),
-        " " if sampling_rate != 100 else "--resample_time",
         "--nt",
         str(nt),
         "--nx",
@@ -60,6 +59,9 @@ def run_EQNet(file_list: Path, **kwargs) -> None:
 
     if ngpu > 0 and amp:
         command.append("--amp")
+
+    if sampling_rate != 100:
+        command.append("--resample_time")
 
     env = os.environ.copy()
 
