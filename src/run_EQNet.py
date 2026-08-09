@@ -48,7 +48,7 @@ def run_EQNet(file_list: Path, **kwargs) -> None:
         "--cut_patch",
         "--sampling_rate",
         str(sampling_rate),
-        "" if sampling_rate != 100 else "--resample_time",
+        " " if sampling_rate != 100 else "--resample_time",
         "--nt",
         str(nt),
         "--nx",
