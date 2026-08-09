@@ -125,14 +125,6 @@ def plot_event(
         axis=-1,
     ).astype(np.float32, copy=False)
 
-    # Remove the spatially constant component.
-    data -= np.mean(
-        data,
-        axis=0,
-        keepdims=True,
-        dtype=np.float32,
-    )
-
     duration_s = data.shape[1] / raw_sampling_rate
     last_channel = channel_start + data.shape[0] - 1
 
