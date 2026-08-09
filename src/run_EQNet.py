@@ -14,6 +14,7 @@ def run_EQNet(file_list: Path, **kwargs) -> None:
     nt = kwargs.get("nt", 6144)
     nx = kwargs.get("nx", 6144)
     min_prob = kwargs.get("min_prob", 0.75)
+    sampling_rate = kwargs.get("sampling_rate", 200)
     # Float16 precision to save VRAM
     amp = kwargs.get("amp", False)
 
@@ -45,8 +46,8 @@ def run_EQNet(file_list: Path, **kwargs) -> None:
         "0",
         "--cut_patch",
         "--sampling_rate",
-        "200",
-        "--resample_time",
+        str(sampling_rate),
+        "" if sampling_rate != 100 else "--resample_time",
         "--nt",
         str(nt),
         "--nx",
