@@ -5,6 +5,7 @@ import sys
 # DATA SETTINGS
 FIBER_CHANNELS = 6000
 FIBER_NAME = "fiber_0"
+FIBER_SAMPLING_RATE = 100
 
 # Python path
 PYTHON_PATH = Path(sys.executable)

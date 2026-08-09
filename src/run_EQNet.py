@@ -2,7 +2,7 @@ import os
 import subprocess
 import torch
 
-from config import EQNET_DIR, RESULTS_PATH, PYTHON_PATH, FIBER_CHANNELS
+from config import EQNET_DIR, RESULTS_PATH, PYTHON_PATH, FIBER_CHANNELS, FIBER_SAMPLING_RATE
 from pathlib import Path
 
 def run_EQNet(file_list: Path, **kwargs) -> None:
@@ -15,7 +15,7 @@ def run_EQNet(file_list: Path, **kwargs) -> None:
     # Smallest multiple of 1024 that is >= FIBER_CHANNELS
     nx = kwargs.get("nx", ((FIBER_CHANNELS + 1023) // 1024) * 1024)
     min_prob = kwargs.get("min_prob", 0.75)
-    sampling_rate = kwargs.get("sampling_rate", 200)
+    sampling_rate = kwargs.get("sampling_rate", FIBER_SAMPLING_RATE)
     # Float16 precision to save VRAM
     amp = kwargs.get("amp", False)
 
