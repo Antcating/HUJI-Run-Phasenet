@@ -3,7 +3,7 @@ from pathlib import Path
 
 import telebot
 
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, FIBER_NAME
 
 
 def send_detection(
@@ -24,6 +24,7 @@ def send_detection(
 
     caption = (
         "New detection\n"
+        f"Fiber: {FIBER_NAME}\n"
         f"Date: {event_time:%Y-%m-%d}\n"
         f"Time: {event_time:%H:%M:%S} {event_time.tzname()}\n"
         f"Picks: {num_picks:,}"
