@@ -38,7 +38,7 @@ def plot_event(
     local_start = utc_start.astimezone(ZoneInfo(local_tz))
 
     hdf5_path = (
-        DATA_ROOT / utc_start.strftime("%Y%m%d") / f"{phasenet_picks_csv.stem}.h5"
+        DATA_ROOT / utc_start.strftime("%Y") / utc_start.strftime("%Y%m%d") / f"{phasenet_picks_csv.stem}.h5"
     )
 
     if not hdf5_path.exists():
